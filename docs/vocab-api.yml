@@ -1,0 +1,122 @@
+openapi: "3.0.3"
+info:
+  title: Vocab Api
+  version: "1.0"
+servers:
+  - url: http://localhost:8000/api
+    description: Local server
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    Vocabulary:
+      type: object
+      properties:
+        id:
+          type: integer
+        word:
+          type: string
+        meaning:
+          type: string
+        part_of_speech:
+          type: string
+        example:
+          type: string
+        is_mastered:
+          type: boolean
+paths:
+  /vocabularies:
+    get:
+      tags: [Vocabulary]
+      summary: Get all vocab
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Success get data
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Vocabulary"
+    post:
+      tags: [Vocabulary]
+      summary: Create Vocab
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [word, meaning]
+              properties:
+                word:
+                  type: string
+                meaning:
+                  type: string
+                part_of_speech:
+                  type: string
+                example:
+                  type: string
+      responses:
+        "201":
+          description: Success Create Vocab
+
+  /vocabularies/{id}:
+    put:
+      tags: [Vocabulary]
+      summary: Edit Vocab
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID from vocab
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                word:
+                  type: string
+                meaning:
+                  type: string
+                part_of_speech:
+                  type: string
+                example:
+                  type: string
+                is_mastered:
+                  type: boolean
+      responses:
+        "200":
+          description: Success update Vocab
+        "404":
+          description: Not Found
+    delete:
+      tags: [Vocabulary]
+      summary: Delete vocab
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID vocab
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Success delete vocab
+        "404":
+          description: Not Found
