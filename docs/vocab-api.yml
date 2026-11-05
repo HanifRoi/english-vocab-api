@@ -103,6 +103,22 @@ paths:
           description: Success update Vocab
         "404":
           description: Not Found
+    get:
+      tags: [Vocabulary]
+      summary: Get spesific vocab
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Success getvocab
+        '404':
+          description: Not found
     delete:
       tags: [Vocabulary]
       summary: Delete vocab
