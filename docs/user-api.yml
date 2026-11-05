@@ -80,6 +80,10 @@ paths:
                 properties:
                   access_token:
                     type: string
+        "422":
+          description: Validation Error
+        "401":
+          description: Unauthorized
 
   /user:
     get:
