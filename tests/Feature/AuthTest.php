@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Hash;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 use function PHPUnit\Framework\assertNotNull;
@@ -94,5 +95,15 @@ class AuthTest extends TestCase
         ]);
 
         $response->assertStatus(401);
+    }
+
+    public function testLogout()
+    {
+       $user = User::factory()->create();
+            //menggunakan Sanctum bukan $this->actingAs , 
+            //berpura pura bahwa login menggunakan token API yang sah
+            Sanctum::actingAs($user);
+        $response = $this->post('/api/logout');
+        $response->assertStatus(200);
     }
 }
