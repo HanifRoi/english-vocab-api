@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\VocabularyController;
 use App\Models\Vocabulary;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -19,7 +20,7 @@ Route::controller(AuthController::class)->group(function(){
 Route::middleware('auth:sanctum')->group(function(){
     Route::post('/logout', [AuthController::class, 'logout']);
 
-    Route::controller(Vocabulary::class)->group(function(){
+    Route::controller(VocabularyController::class)->group(function(){
         Route::get('/vocabularies', 'index');
         Route::post('/vocabularies', 'store');
         Route::get('/vocabularies/{vocab}', 'show');
