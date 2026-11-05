@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Hash;
@@ -41,5 +42,57 @@ class AuthTest extends TestCase
 
         $response->assertStatus(422);
         $response->assertJsonValidationErrors(['email', 'password']);
+    }
+
+    public function testLoginSuccess()
+    {
+        User::factory()->create([
+            'name'=>'Hanif Roihan',
+            'email'=>'hanif@test.com',
+            'password'=>'rahasia123!'
+        ]);
+
+        $response = $this->post('/api/login', [
+            'email'=>'hanif@test.com',
+            'password'=>'rahasia1234!'
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'access_token'
+        ]);
+    }
+
+    public function testLoginValidationError()
+    {
+        User::factory()->create([
+            'name'=>'Hanif Roihan',
+            'email'=>'hanif',
+            'password'=>'email'
+        ]);
+
+        $response = $this->post('/api/login', [
+            'email'=>'hanif',
+            'password'=>''
+        ]);
+
+        $response->assertStatus(422);
+        $response->assertJsonValidationErrors(['email', 'password']);
+    }
+
+    public function testLoginFailed()
+    {
+        User::factory()->create([
+            'name'=>'Hanif Roihan',
+            'email'=>'hanif@test.com',
+            'password'=>'rahasia123!'
+        ]);
+
+        $response = $this->post('/api/login', [
+            'email'=>'hanif@test.com',
+            'password'=>'rahasia124!'
+        ]);
+
+        $response->assertStatus(401);
     }
 }
