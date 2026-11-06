@@ -1,14 +1,12 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\VocabularyController;
 use App\Models\Vocabulary;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
 
 //route untuk yang publik
 Route::controller(AuthController::class)->group(function(){
@@ -26,6 +24,11 @@ Route::middleware('auth:sanctum')->group(function(){
         Route::get('/vocabularies/{vocab}', 'show');
         Route::put('/vocabularies/{vocab}', 'update');
         Route::delete('/vocabularies/{vocab}', 'destroy');
+    });
+
+    Route::controller(UserController::class)->group(function(){
+        Route::get('/user', 'show');
+        Route::put('/user', 'update');
     });
 });
 
