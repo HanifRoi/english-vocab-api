@@ -110,7 +110,7 @@ class VocabularyTest extends TestCase
             'meaning'=>'apa'
         ]);
         $response->assertStatus(403)->assertJson([
-            'message'=>'Forbiden'
+            'message'=>'Forbidden'
         ]);
     }
 
