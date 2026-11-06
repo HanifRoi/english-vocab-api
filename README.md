@@ -1,66 +1,97 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 📚 Vocab API - RESTful API for English Vocabulary
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Sebuah RESTful API yang dibangun menggunakan **Laravel 11** untuk mengelola kosakata Bahasa Inggris. Project ini dikembangkan sebagai wujud implementasi standar industri *Backend Development*, mencakup Autentikasi, Otorisasi, CRUD, *Exception Handling*, dan *Automated Testing*.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Fitur Utama
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+* **Autentikasi Aman:** Sistem Register, Login, dan Logout menggunakan **Laravel Sanctum** (Bearer Token).
+* **Manajemen Profil:** Fitur untuk melihat dan mengedit profil user dengan pengamanan *hashing* password otomatis.
+* **CRUD Vocabulary:** Pengelolaan data kosakata (tambah, lihat, edit, hapus) yang terikat pada masing-masing user.
+* **Otorisasi Data (RBAC):** Proteksi data super ketat yang memastikan user tidak dapat mengintip atau mengubah data milik user lain (dilengkapi dengan *custom exception* 403 Forbidden).
+* **Validasi Ketat:** Memanfaatkan Laravel *Form Requests* untuk memastikan integritas dan validitas data sebelum masuk ke database.
+* **Standar API Global:** Konfigurasi khusus pada `bootstrap/app.php` untuk menjamin semua respon *error* (401, 403, 404, 500) dikembalikan dalam format **JSON**, bukan halaman HTML.
+* **100% Test Coverage:** Dilengkapi dengan *Feature Tests* komprehensif menggunakan PHPUnit untuk menguji fungsionalitas dan celah keamanan.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## Teknologi & Tools (Tech Stack)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+* **Framework:** Laravel 11
+* **Language:** PHP 8.2
+* **Database:** MySQL
+* **Authentication:** Laravel Sanctum
+* **Testing Framework:** PHPUnit
+* **API Documentation:** OpenAPI 3.0.3 (Swagger)
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+---
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Cara Menjalankan Project Secara Lokal
 
-## Laravel Sponsors
+Ikuti langkah-langkah berikut untuk memasang project ini di komputer lokal Anda:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 1. Clone Repository
+```bash
+git clone https://github.com/HanifRoi/vocab-api.git
+cd vocab-api
+```
 
-### Premium Partners
+### 2. Install Dependensi PHP
+```bash
+composer install
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### 3. Setup Environment File
+Salin file `.env.example` menjadi `.env`:
+```bash
+cp .env.example .env
+```
+Buka file `.env` yang baru dibuat, lalu sesuaikan konfigurasi database Anda:
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=nama_database_kamu
+DB_USERNAME=root
+DB_PASSWORD=
+```
 
-## Contributing
+### 4. Generate Application Key
+```bash
+php artisan key:generate
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 5. Jalankan Database Migration
+```bash
+php artisan migrate
+```
 
-## Code of Conduct
+### 6. Jalankan Local Server
+```bash
+php artisan serve
+```
+Aplikasi sekarang dapat diakses melalui URL: `http://127.0.0.1:8000`
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+## Menjalankan Automated Testing
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Untuk membuktikan bahwa seluruh fitur, validasi, dan lapisan keamanan berjalan dengan baik tanpa *bug*, jalankan perintah:
 
-## License
+```bash
+php artisan test
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---
+
+## Dokumentasi API
+
+Seluruh kontrak API (endpoint, request body, query parameters, dan skema response) terdokumentasi dengan rapi menggunakan standar **OpenAPI 3.0.3**. 
+
+Anda dapat melihat spesifikasi lengkapnya pada file:
+`docs/user-api.yaml`
+`docs/vocab-api.yaml`
+
+Dikembangkan Oleh
+**Hanif Roihan** 
