@@ -11,7 +11,7 @@ class VocabularyController extends Controller
     private function getSecurity( Vocabulary $vocab)
     {
         if($vocab->user_id !== auth()->id()){
-            abort(403, 'Forbiden');
+            abort(403, 'Forbidden');
         }
 
         return $vocab;
